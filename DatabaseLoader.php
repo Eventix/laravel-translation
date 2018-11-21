@@ -52,7 +52,7 @@ class DatabaseLoader implements Loader {
 
         $r = ($differential === false ? $r->whereNull('company_id') : $r->where('company_id', $differential));
 
-        return $r->pluck('value', 'name');
+        return $r->pluck('value', 'name')->toArray();
     }
 
     /**
