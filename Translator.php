@@ -15,7 +15,7 @@ class Translator extends \Illuminate\Translation\Translator {
         // given namespace, group, and locale. We'll set the lines in this array of
         // lines that have already been loaded so that we can easily access them.
         $lines = $this->loader->load($locale, $group, $namespace, $diff);
-        $this->loaded[$namespace][$group][$locale][$diff] = $lines;
+        $this->loaded[$namespace][$group][$locale] = $lines;
     }
 
     /**
@@ -40,6 +40,6 @@ class Translator extends \Illuminate\Translation\Translator {
     public function getLines($locale, $group, $namespace = null, $differential = false) {
         $this->load($namespace, $group, $locale, $differential);
 
-        return $this->loaded[$namespace][$group][$locale][$differential];
+        return $this->loaded[$namespace][$group][$locale];
     }
 }
