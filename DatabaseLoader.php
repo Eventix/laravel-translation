@@ -43,16 +43,18 @@ class DatabaseLoader implements Loader {
 
         return $allLines;
     }
-    
+
     private function linesCallback($locale, $group, $namespace, $differential) {
-        $r = \DB::table('translation')
+        if ($differential === false) {
+            return [];
+        }
+
+        return \DB::table('translation')
             ->where('locale', $locale)
             ->where('group', $group)
-            ->where('namespace', $namespace == '*' ? null : $namespace);
-
-        $r = ($differential === false ? $r->whereNull('company_id') : $r->where('company_id', $differential));
-
-        return $r->pluck('value', 'name')->toArray();
+            ->where('namespace', $namespace == '*' ? null : $namespace)
+            ->where('company_id', $differential)
+            ->pluck('value', 'name')->toArray();
     }
 
     /**
